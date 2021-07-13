@@ -1,0 +1,222 @@
+using System;
+using System.Collections.Generic;
+
+namespace RechenBall
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Menu.MainMenu();
+        }
+    }
+
+    class Menu
+    {
+        public static void MainMenu()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("");
+                Console.WriteLine("Willkommen bei RechenBall!");
+                Console.WriteLine("--------------------------");
+                Console.WriteLine("");
+                Console.WriteLine("Was möchtest du tun?");
+                Console.WriteLine("[1] Spiel starten");
+                Console.WriteLine("[2] Regeln lesen");
+                Console.WriteLine("[3] Spiel beenden");
+                Console.WriteLine("");
+                Console.Write("Eingabe: ");
+                byte a;
+                try
+                {
+                    a = Convert.ToByte(Console.ReadLine());
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Ungültige Eingabe! Gib bitte eine gültige Zahl ein!");
+                    Console.ReadKey();
+                    continue;
+                }
+
+                bool end = false;
+
+                switch (a)
+                {
+                    case 1:
+                        StartGame.LoadGame();
+                        break;
+
+                    case 2:
+                        Rules.RulesMenu();
+                        break;
+
+                    case 3:
+                        end = true;
+                        break;
+
+                    default:
+                        Console.WriteLine("Ungültige Eingabe! Gib bitte eine gültige Zahl ein!");
+                        Console.ReadKey();
+                        break;
+                }
+
+                if (end)
+                    break;
+            }
+        }
+
+    }
+
+    class Rules
+    {
+        public static void RulesMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Einfaches Regelwerk:");
+            Console.WriteLine("");
+            Console.WriteLine("1. Richtiges Ergebnis eingeben um den Ball in den Korb zu werfen");
+            Console.ReadKey();
+        }
+    }
+
+    class StartGame
+    {
+        public static void LoadGame()
+        {
+            int[,] arrays = new int[6, 2];
+            Random rnd = new Random();
+
+            for (byte i = 0; i < 6; i++)
+            {
+                arrays[i, 0] = rnd.Next(1, 10);
+                arrays[i, 1] = rnd.Next(1, 10);
+            }
+
+            Game.PlayGame(arrays);
+        }
+    }
+
+    class Game
+    {
+        public static void PlayGame(int[,] array)
+        {
+            while (true)
+            {
+                for (byte i = 0; i < 6; i++)
+                {
+                    while (true)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Gib das korekte Ergebnis ein.");
+                        Console.Write(array[i, 0] + " * " + array[i, 1] + " = ");
+                        int number;
+
+                        try
+                        {
+                            number = Convert.ToInt32(Console.ReadLine());
+                        }
+                        catch (Exception)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Ungültige Eingabe! Bitte eine Zahl eingeben!");
+                            Console.ReadKey();
+                            continue;
+                        }
+
+                        if (number != array[i, 0] * array[i, 1])
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Falsches Ergebnis! Bitte ernäut versuchen!");
+                            Console.ReadKey();
+                            continue;
+                        }
+
+                        break;
+                    }
+
+                    Console.Clear();
+                    Console.WriteLine("Richtig");
+                    Console.WriteLine("");
+                    PrintPaint(i);
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Gut gemacht!");
+                Console.ResetColor();
+                Console.ReadKey();
+                break;
+            }
+        }
+
+        private static void PrintPaint(byte number)
+        {
+            switch (number)
+            {
+                case 0:
+                    Console.WriteLine("");
+                    Console.WriteLine(@"       |____                  °");
+                    Console.WriteLine(@"   / ~~| \%/                    \");
+                    Console.WriteLine(@"   |                             \O");
+                    Console.WriteLine(@"   |                              |");
+                    Console.WriteLine(@"   |                              /|");
+                    Console.WriteLine(@"~~~~~~                           | |");
+                    break;
+
+                case 1:
+                    Console.WriteLine("");
+                    Console.WriteLine(@"       |____                °");
+                    Console.WriteLine(@"   / ~~| \%/                    \");
+                    Console.WriteLine(@"   |                             \O");
+                    Console.WriteLine(@"   |                              |");
+                    Console.WriteLine(@"   |                              /|");
+                    Console.WriteLine(@"~~~~~~                           | |");
+                    break;
+
+                case 2:
+                    Console.WriteLine("");
+                    Console.WriteLine(@"       |____            °");
+                    Console.WriteLine(@"   / ~~| \%/                    \");
+                    Console.WriteLine(@"   |                             \O");
+                    Console.WriteLine(@"   |                              |");
+                    Console.WriteLine(@"   |                              /|");
+                    Console.WriteLine(@"~~~~~~                           | |");
+                    break;
+
+                case 3:
+                    Console.WriteLine("");
+                    Console.WriteLine(@"       |____        °");
+                    Console.WriteLine(@"   / ~~| \%/                    \");
+                    Console.WriteLine(@"   |                             \O");
+                    Console.WriteLine(@"   |                              |");
+                    Console.WriteLine(@"   |                              /|");
+                    Console.WriteLine(@"~~~~~~                           | |");
+                    break;
+
+                case 4:
+                    Console.WriteLine("");
+                    Console.WriteLine(@"       |____    °");
+                    Console.WriteLine(@"   / ~~| \%/                    \");
+                    Console.WriteLine(@"   |                             \O");
+                    Console.WriteLine(@"   |                              |");
+                    Console.WriteLine(@"   |                              /|");
+                    Console.WriteLine(@"~~~~~~                           | |");
+                    break;
+
+                case 5:
+                    Console.WriteLine("");
+                    Console.WriteLine(@"       |____");
+                    Console.WriteLine(@"   / ~~| \°/                    \");
+                    Console.WriteLine(@"   |                             \O");
+                    Console.WriteLine(@"   |                              |");
+                    Console.WriteLine(@"   |                              /|");
+                    Console.WriteLine(@"~~~~~~                           | |");
+                    break;
+            }
+        }
+
+    }
+}
